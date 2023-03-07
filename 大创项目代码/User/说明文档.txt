@@ -1,0 +1,19 @@
+引脚使用情况
+
+PWM输出脚
+GPIOA  Pin_2,Pin_3;   TIM2_CH3 TIM2_CH4
+GPIOB  Pin_0,Pin_1;   TIM3_CH3 TIM3_CH4
+
+电机驱动芯片引脚连接
+GPIOA	Pin_4,Pin_5,Pin_6,Pin_7;
+GPIOB	Pin_12,Pin_13,Pin_14,Pin_15;
+
+串口引脚
+串口3	GPIOB	Pin_10,Pin_11;  TX,RX
+串口1	GPIOA	Pin_9,Pin_10;  TX,RX
+
+OLED SCL与SDA引脚
+SCL		GPIOB Pin6	SCL
+SDA		GPIOB Pin7	SDA
+
+
