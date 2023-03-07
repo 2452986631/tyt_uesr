@@ -38,5 +38,6 @@
 .\objects\main.o: .\Hardware\motion.h
 .\objects\main.o: .\Hardware\usart3.h
 .\objects\main.o: .\Hardware\esp8266.h
+.\objects\main.o: .\Hardware\wave.h
 .\objects\main.o: .\Hardware\key.h
 .\objects\main.o: .\Hardware\timer.h

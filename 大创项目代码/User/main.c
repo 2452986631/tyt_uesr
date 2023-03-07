@@ -7,7 +7,7 @@
 #include "motion.h"
 #include "usart3.h"
 #include "esp8266.h"
-//#include "wave.h"
+#include "wave.h"
 #include "key.h"
 #include "timer.h"
 
@@ -16,21 +16,26 @@ uint8_t KeyNum;
 int main(void)
 {
   uint8_t key;
-	//Wave_SRD_Init();
 	OLED_Init();
 	Motion_Init();
 	delay_init();
   Key_Init();
+//---------------串口初始化--------------------------
 	uart_init(115200);
   usart3_init(115200);
+//----------------超声波初始化-----------------------
+	Wave_SRD_Init();
 	Timer_SRD_Init(9998,7199); //Tout= ((4999+1)*( 7199+1))/72=500000us=500ms
-	esp8266_start_trans();  //esp8266进行初始化
-	esp8266_send_data("WIFI连接成功\r\n",50);
-	esp8266_send_data("TCP连接成功\r\n",50); 
+	//OLED_ShowString(1,1,"Distance=000cm");
+//----------ESP8266初始化----------------------------
+//	esp8266_start_trans();  //esp8266进行初始化
+//	esp8266_send_data("WIFI连接成功\r\n",50);
+//	esp8266_send_data("TCP连接成功\r\n",50); 
 
 	while (1)
 	{
 ////--------------超声波测距-------------------------
+
 //		Wave_SRD_Strat();
 //    delay_ms(200);
 //		OLED_ShowNum(1,10,EXTI9_5_IRQHandler(),3);

@@ -13,11 +13,11 @@ void TIM2_IRQHandler(void)
 	}	    
 }
 //定时器3中断服务程序	 用于超声波
-void TIM3_IRQHandler(void)
+void TIM4_IRQHandler(void)
 {
-	if(TIM_GetITStatus(TIM3,TIM_IT_Update)!=RESET)
+	if(TIM_GetITStatus(TIM4,TIM_IT_Update)!=RESET)
 	{
-		TIM_ClearITPendingBit(TIM3,TIM_IT_Update);
+		TIM_ClearITPendingBit(TIM4,TIM_IT_Update);
 		
 	}
 }
@@ -32,7 +32,7 @@ void TIM2_Int_Init(u16 arr,u16 psc)
 	NVIC_InitTypeDef NVIC_InitStructure;
 	TIM_TimeBaseInitTypeDef  TIM_TimeBaseStructure;
 
-	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);//TIM7时钟使能    
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);//TIM2时钟使能    
 	
 	//定时器TIM2初始化
 	TIM_TimeBaseStructure.TIM_Period = arr; //设置在下一个更新事件装入活动的自动重装载寄存器周期的值	
@@ -62,21 +62,21 @@ void Timer_SRD_Init(u16 arr,u16 psc)
 	TIM_TimeBaseInitTypeDef    TIM_TimeBaseInitSture;
 	NVIC_InitTypeDef           NVIC_InitSture;
 	
-	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3,ENABLE);//开启定时器3的时钟
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM4,ENABLE);//开启定时器3的时钟
 	
 	//定时器初始化
 	TIM_TimeBaseInitSture.TIM_CounterMode=TIM_CounterMode_Up;//向上计数
 	TIM_TimeBaseInitSture.TIM_Period=arr;
 	TIM_TimeBaseInitSture.TIM_Prescaler=psc;
 	TIM_TimeBaseInitSture.TIM_ClockDivision=0;
-	TIM_TimeBaseInit(TIM3,&TIM_TimeBaseInitSture);
+	TIM_TimeBaseInit(TIM4,&TIM_TimeBaseInitSture);
 	
 	//使能中断定时器源
-	TIM_ITConfig(TIM3,TIM_IT_Update,ENABLE);
-	TIM_ITConfig(TIM3,TIM_IT_Trigger,ENABLE);
+	TIM_ITConfig(TIM4,TIM_IT_Update,ENABLE);
+	TIM_ITConfig(TIM4,TIM_IT_Trigger,ENABLE);
 	
 	//中断分组
-	NVIC_InitSture.NVIC_IRQChannel=TIM3_IRQn;
+	NVIC_InitSture.NVIC_IRQChannel=TIM4_IRQn;
 	NVIC_InitSture.NVIC_IRQChannelCmd=ENABLE;
 	NVIC_InitSture.NVIC_IRQChannelPreemptionPriority=0;
 	NVIC_InitSture.NVIC_IRQChannelSubPriority=3;

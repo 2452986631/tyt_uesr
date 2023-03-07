@@ -90,12 +90,6 @@ void uart_init(u32 bound){
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;	//复用推挽输出
   GPIO_Init(GPIOA, &GPIO_InitStructure);//初始化GPIOA.9
    
-
-//
-  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0; //PA.0
-  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
-  GPIO_Init(GPIOA, &GPIO_InitStructure);//初始化GPIOA.0
-
 //
   //USART1_RX	  GPIOA.10初始化
   GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10;//PA10
