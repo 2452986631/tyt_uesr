@@ -1,6 +1,5 @@
 #include "stm32f10x.h"                  // Device header
 #include "usart5.h"
-
 #include "usart.h"
 #include "hmi.h"
 
@@ -28,14 +27,12 @@ void uart5_init(u32 bound)
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;//浮空输入
 	GPIO_Init(GPIOD, &GPIO_InitStructure);
 
-
-	 //NVIC
+	//NVIC
   NVIC_InitStructure.NVIC_IRQChannel = UART5_IRQn;
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority=3 ;//抢占优先级3
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;		//子优先级0
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority=3;//抢占优先级3
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority =1;		//子优先级0
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;			//IRQ通道使能
 	NVIC_Init(&NVIC_InitStructure);	//根据指定的参数初始化VIC寄存器
-
 
 	//USART 初始化设置
 	USART_InitStructure.USART_BaudRate = bound;//串口波特率
@@ -48,20 +45,25 @@ void uart5_init(u32 bound)
   USART_ITConfig(UART5, USART_IT_RXNE, ENABLE);//开启串口接受中断
   USART_Cmd(UART5, ENABLE);                    //使能串口5
 }
-
-
 /**************************************************************************
 函数功能：串口5接收中断
 入口参数：无
 返回  值：无
 **************************************************************************/
-u8 result;
+int result;
+int data[100];
+unsigned char sum=0;
 unsigned char flag=0;
 void UART5_IRQHandler(void)
 {
 	if(USART_GetITStatus(UART5, USART_IT_RXNE) != RESET)
 		{
 			result =USART_ReceiveData(UART5);	//读取接收到的数据
-			flag=1;
+			if( (result!=13) && (result!=10) )
+			{
+			   data[sum]=result-48;
+				 sum++; 
+			}
+      if(result==13) flag=1;
     }
 }

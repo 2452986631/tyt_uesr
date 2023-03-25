@@ -41,14 +41,11 @@ void USART3_IRQHandler(void)
 		}
 	}  				 											 
 }   
-
-
 //初始化IO 串口3
 //pclk1:PCLK1时钟频率(Mhz)
 //bound:波特率	  
 void usart3_init(u32 bound)
 {  
-
 	NVIC_InitTypeDef NVIC_InitStructure;
 	GPIO_InitTypeDef GPIO_InitStructure;
 	USART_InitTypeDef USART_InitStructure;
@@ -57,13 +54,13 @@ void usart3_init(u32 bound)
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART3,ENABLE); //串口3时钟使能
 
  	USART_DeInit(USART3);  //复位串口3
-		 //USART3_TX   PB10
+  //USART3_TX   PB10
   GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10; //PB10
   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;	//复用推挽输出
   GPIO_Init(GPIOB, &GPIO_InitStructure); //初始化PB10
    
-    //USART3_RX	  PB11
+  //USART3_RX	  PB11
   GPIO_InitStructure.GPIO_Pin = GPIO_Pin_11;
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;//浮空输入
   GPIO_Init(GPIOB, &GPIO_InitStructure);  //初始化PB11
@@ -76,8 +73,6 @@ void usart3_init(u32 bound)
 	USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;	//收发模式
   
 	USART_Init(USART3, &USART_InitStructure); //初始化串口	3
-  
-
 	USART_Cmd(USART3, ENABLE);                    //使能串口 
 	
 	//使能接收中断
@@ -85,18 +80,16 @@ void usart3_init(u32 bound)
 	
 	//设置中断优先级
 	NVIC_InitStructure.NVIC_IRQChannel = USART3_IRQn;
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority=2 ;//抢占优先级2
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority=2;//抢占优先级2
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 3;		//子优先级3
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;			//IRQ通道使能
 	NVIC_Init(&NVIC_InitStructure);	//根据指定的参数初始化VIC寄存器
-	
 	
 	TIM2_Int_Init(1000-1,7200-1);		//10ms中断
 	USART3_RX_STA=0;		//清零
 	TIM_Cmd(TIM2,DISABLE);			//关闭定时器2
 
 }
-
 //串口3,printf 函数
 //确保一次发送数据不超过USART3_MAX_SEND_LEN字节
 void u3_printf(char* fmt,...)  

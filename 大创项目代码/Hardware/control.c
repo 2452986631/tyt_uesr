@@ -7,7 +7,7 @@ uint8_t subtract2;
 
 void INit(void)
 {
-	  	Motor_Init();
+	Motor_Init();
 }
 
 void Contrlo_Stop(void)//Í£Ö¹  40cm~50cm
@@ -40,18 +40,18 @@ void Contrlo_Left(void)//×ó×ª
 {
 	subtract1=distanceR-distanceL;
 	if( subtract1 >=50)
-		{
-			Turn_left(8,24,16,32);
-		}
+	{
+		Turn_left(8,24,16,32);
+	}
 }
 
 void Contrlo_Right(void)//ÓÒ×ª
 {
   subtract2=distanceL-distanceR;
 	if( subtract2 >=50)
-		{
-			Trun_right(24,8,32,16);
-		}
+	{
+		Trun_right(24,8,32,16);
+	}
 }
 
 //oid Contrlo_Back()//ºóÍË

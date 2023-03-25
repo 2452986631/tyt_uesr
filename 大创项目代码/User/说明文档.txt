@@ -1,4 +1,7 @@
-引脚使用情况
+1、一维码/二维码扫描模块可以扫描的数据长度是有范围的，
+扫描出来的数据传输到MCU上面是ACSLL码；
+
+2、引脚使用情况
 
 PWM输出脚
 GPIOA    Pin_6,Pin_7;    TIM3_CH1 TIM3_CH2
@@ -9,15 +12,17 @@ GPIOA	Pin_4,Pin_5,Pin11,Pin_12;
 GPIOB	Pin_12,Pin_13,Pin_14,Pin_15;
 
 串口引脚
-串口3	GPIOB	Pin_10,Pin_11;  TX,RX     		ESP8266		抢占优先级2子优先级3
-串口1	GPIOA	Pin_9,Pin_10;  TX,RX	  		打印数据 	抢占优先级3子优先级1
-串口2	GPIOA	Pin_2,Pin_3;  TX,RX		  		超声波		抢占优先级3子优先级3
-串口4	GPIOC	Pin_10,Pin_11;  TX,RX      		超声波		抢占优先级3子优先级2
-串口5	GPIOC|GPIOD		Pin_12,Pin_2;  TX,RX  	扫描		抢占优先级3子优先级0
+串口3	GPIOB	Pin_10,Pin_11;  TX,RX     		ESP8266		抢占优先级2  响应优先级3
+串口1	GPIOA	Pin_9,Pin_10;  TX,RX	  		打印数据 	抢占优先级3  响应优先级2
+串口2	GPIOA	Pin_2,Pin_3;  TX,RX		  		超声波		抢占优先级3  响应优先级4
+串口4	GPIOC	Pin_10,Pin_11;  TX,RX      		超声波		抢占优先级3  响应优先级3
+串口5	GPIOC|GPIOD		Pin_12,Pin_2;  TX,RX  	扫描		抢占优先级3  响应优先级1
+
 
 OLED SCL与SDA引脚
 SCL		GPIOB Pin8	SCL
 SDA		GPIOB Pin9  SDA
+
 
 
 

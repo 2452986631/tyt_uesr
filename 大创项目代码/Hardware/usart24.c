@@ -1,17 +1,5 @@
 #include "usart24.h"
 
-
-/**************************************************************************
- 作  者 ：大鱼电子
- 淘宝地址：https://shop119207236.taobao.com
- 微信公众号【大鱼机器人】
- 后台回复【平衡小车】：获取平衡小车全套DIY资料
- 后台回复【电子开发工具】：获取电子工程师必备开发工具
- 后台回复【电子设计资料】：获取电子设计资料包
- 知乎：张巧龙 
-**************************************************************************/
-
-
 unsigned char   dat1[3],dat2[3];
 unsigned char   num1,num2;
 int             distanceL,distanceR;	
@@ -23,13 +11,14 @@ int             distanceL,distanceR;
 **************************************************************************/
 void uart2_init(u32 bound)
 {  	 
-	  //GPIO端口设置
+	//GPIO端口设置
   GPIO_InitTypeDef GPIO_InitStructure;
 	USART_InitTypeDef USART_InitStructure;
 	NVIC_InitTypeDef NVIC_InitStructure;
 	 
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA , ENABLE);	//使能UGPIOA时钟
   RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART2, ENABLE);	//使能USART2时钟
+
 	//USART2_TX  
   GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2; //PA2	
   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
@@ -41,15 +30,14 @@ void uart2_init(u32 bound)
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;//浮空输入
   GPIO_Init(GPIOA, &GPIO_InitStructure);
 
- //NVIC
+  //NVIC
   NVIC_InitStructure.NVIC_IRQChannel = USART2_IRQn;
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority=3 ;//抢占优先级3
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 3;		//子优先级3
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority=3 ;//抢占优先级1
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority =4;		//子优先级0
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;			//IRQ通道使能
 	NVIC_Init(&NVIC_InitStructure);	//根据指定的参数初始化VIC寄存器
 
-
-   //USART 初始化设置
+  //USART 初始化设置
 	USART_InitStructure.USART_BaudRate = bound;//串口波特率
 	USART_InitStructure.USART_WordLength = USART_WordLength_8b;//字长为8位数据格式
 	USART_InitStructure.USART_StopBits = USART_StopBits_1;//一个停止位
@@ -86,15 +74,14 @@ void uart4_init(u32 bound)
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;//浮空输入
   GPIO_Init(GPIOC, &GPIO_InitStructure);
 
-
- //NVIC 
+  //NVIC 
   NVIC_InitStructure.NVIC_IRQChannel = UART4_IRQn;
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority=3 ;//抢占优先级3
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;		//子优先级3
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority =3;		//子优先级3
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;			//IRQ通道使能
 	NVIC_Init(&NVIC_InitStructure);	//根据指定的参数初始化VIC寄存器
 
-   //USART 初始化设置
+  //USART 初始化设置
 	USART_InitStructure.USART_BaudRate = bound;//串口波特率
 	USART_InitStructure.USART_WordLength = USART_WordLength_8b;//字长为8位数据格式
 	USART_InitStructure.USART_StopBits = USART_StopBits_1;//一个停止位
@@ -105,8 +92,6 @@ void uart4_init(u32 bound)
   USART_ITConfig(UART4, USART_IT_RXNE, ENABLE);//开启串口接受中断
   USART_Cmd(UART4, ENABLE);                    //使能串口3 
 }
-
-
 
 /**************************************************************************
 函数功能：串口4接收中断
@@ -124,7 +109,6 @@ void UART4_IRQHandler(void)
         {
             num2 = 0;
             distanceR = dat2[1]<<8 | dat2[2];
-
         }
 	}  											 
 } 
