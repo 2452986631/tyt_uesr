@@ -21,13 +21,13 @@ void esp8266_start_trans(void)
 	delay_ms(1000);
 	
 	//让模块连接上自己的路由 AT+CWJAP
-	while(esp8266_send_cmd("AT+CWJAP=\"1234\",\"1234567800\"","WIFI GOT IP",3000));
+	while(esp8266_send_cmd("AT+CWJAP=\"1234\",\"12345678\"","WIFI GOT IP",1000));
 	
 	//=0：单路连接模式     =1：多路连接模式
 	esp8266_send_cmd("AT+CIPMUX=0","OK",20);
 	
 	//建立TCP连接  这四项分别代表了 要连接的ID号0~4   连接类型  远程服务器IP地址   远程服务器端口号
-	while(esp8266_send_cmd("AT+CIPSTART=\"TCP\",\"192.168.50.151\",2020","CONNECT",200));
+	while(esp8266_send_cmd("AT+CIPSTART=\"TCP\",\"192.168.217.151\",2121","CONNECT",200));
 	
 	//是否开启透传模式  0：表示关闭 1：表示开启透传
 	esp8266_send_cmd("AT+CIPMODE=1","OK",200);
