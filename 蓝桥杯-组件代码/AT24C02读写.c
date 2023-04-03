@@ -1,6 +1,6 @@
 #include "iic.h"
 #include <STC15F2K60S2.H>
-
+//EA=0,EA=1的反复打开与关闭是为了防止中断打断时序
 //字节写操作
 void Write_24C02(unsigned char addr, unsigned char dat)
 {

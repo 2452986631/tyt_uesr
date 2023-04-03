@@ -15,41 +15,31 @@ unsigned char code SMG_duanma[19]=
 unsigned char code SMG_IsDot[10] = {0x40,0x79,0x24,
 	0x30,0x19,0x12,0x02,0x78,0x00,0x10};
 
+//建议使用位操作，降低BUG概率
+void m74HC138(unsigned char value)
+{
 
-void m74HC138(unsigned char value)//74HC138选择74HC573锁存器
-{
-		switch(value)
+	switch(value)
 	{
-		//LED
-		case 4: m74HC138_C=1; m74HC138_B=0; m74HC138_A=0;break;
-		//ULN2003
-		case 5: m74HC138_C=1; m74HC138_B=0; m74HC138_A=1;break;
-		//位选
-		case 6: m74HC138_C=1; m74HC138_B=1; m74HC138_A=0;break;
-    //段选
-		case 7: m74HC138_C=1; m74HC138_B=1; m74HC138_A=1;break;
-		//关闭74HC138
-		case 8: m74HC138_C=0; break;
-	}
-}
-void Delayxms(unsigned char xms)//STC15F系列 1ms延时函数
-{
-	unsigned char i, j;
-	while(xms--)
-	{
-		_nop_();
-		_nop_();
-		_nop_();
-		i = 11;
-		j = 190;
-		do
-		{
-			while (--j);
-		} while (--i);
+    case 4:
+      P2 = (P2 & 0x1f) | 0x80;  //Y4输出0，LED控制
+    break;
+    case 5:
+      P2 = (P2 & 0x1f) | 0xa0;  //Y5输出0，蜂鸣器和继电器控制
+    break;
+    case 6:
+      P2 = (P2 & 0x1f) | 0xc0;  //Y6输出0，数码管位选
+    break;
+    case 7:
+      P2 = (P2 & 0x1f) | 0xe0;  //Y7输出0，数码管段码
+    break;
+    case 0:
+      P2 = (P2 & 0x1f) | 0x00;  //所有锁存器不选择
+    break;
 	}
 }
 
-void system_init(void)//关闭LED与蜂鸣器
+void system_init(void)//关闭LED、蜂鸣器、继电器
 {
 	m74HC138(4); P0=P0&0xff;m74HC138(8);
 	m74HC138(5); P0=P0&0x00;m74HC138(8);
@@ -58,7 +48,13 @@ void system_init(void)//关闭LED与蜂鸣器
 //动态数码管模块,用在定时器中
 void DisplaySMG_Bit()
 {
-  static unsigned char i=0;
+	static unsigned char i=0;
+	
+	m74HC138(6);
+	P0=0xff;
+	m74HC138(7);
+	P0=0x00;
+	
 	m74HC138(6);//位选  高电平为选中
 	P0 = 0x01 << i;
 	m74HC138(7);//段码
