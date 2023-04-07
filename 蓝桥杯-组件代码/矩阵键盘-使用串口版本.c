@@ -1,4 +1,4 @@
-//串口TXD与RXD引脚为P32与P31
+//串口TXD与RXD引脚为P30与P31
 sbit R1 = P3 ^ 0;
 sbit R2 = P3 ^ 1;
 sbit R3 = P3 ^ 2;
@@ -13,7 +13,7 @@ sbit C4 = P3 ^ 4;
 //矩阵键盘
 void Key_Borad()
 {
-	static unsigned char status=0;
+  static unsigned char status=0;
   unsigned char keyr,keyc,key_press;
 
   //R1=1; R2=1; 

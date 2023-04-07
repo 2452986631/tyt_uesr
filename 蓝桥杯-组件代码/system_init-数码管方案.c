@@ -1,10 +1,7 @@
 #include <STC15F2K60S2.H>
 #include "intrins.h"
 
-//引脚定义
-sbit m74HC138_A=P2^5;
-sbit m74HC138_B=P2^6;
-sbit m74HC138_C=P2^7;
+
 
 unsigned char buf[8]={0,1,2,3,4,5,6,7};
 unsigned char code SMG_duanma[19]=
@@ -75,6 +72,8 @@ void Timer0Init(void)		//1毫秒@11.0592MHz
 	ET0=1;//定时器0中断
 }
 
+*/
+//------------------------------------------------
 void main()
 {
 	system_init();

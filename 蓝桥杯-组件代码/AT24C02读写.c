@@ -37,7 +37,7 @@ EA=0;
 	IIC_WaitAck();		//等待从机应答	
 	tmp = IIC_RecByte();//读取目标数据
 
-	IIC_SendAck(0); 	//产生非应答信号		
+	IIC_SendAck(1); 	//产生非应答信号		
 	IIC_Stop();		    //IIC总线停止信号		
 	EA=1;
 	return tmp;

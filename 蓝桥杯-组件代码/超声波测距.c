@@ -5,7 +5,7 @@
 */
 sbit TX = P1^0;
 sbit RX = P1^1;
-
+unsigned char time_sonic=0;
 void Init_Timer()//定时器初始化
 {
 	TMOD = 0x11;    
@@ -68,7 +68,31 @@ void main()
 	system_init();
 	while(1)
 	{
+		if(time_sonic==0)Measure_Sonic();
 	}
 }
+void Timer0() interrupt 1
+{
+	static unsigned char count=0;
+	TL0 = 0x20;			
+	TH0 = 0xD1;		
+    count++;   
+	if(count>=2)
+	{
+		Display_SEGBit();		
+		count=0;
+	}
+	time_sonic++;if(time_sonic>=100)time_sonic=0;
+}
 
-
+void DDD()
+{
+	buf[0]=18;
+	buf[1]=18;
+	buf[2]=18;
+	buf[3]=18;
+	buf[4]=18;
+	buf[5]=(distance/100)%10;
+	buf[6]=(distance/10)%10;
+	buf[7]=distance%10;
+}

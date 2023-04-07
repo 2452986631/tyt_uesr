@@ -34,7 +34,7 @@ void dac_pcf8591(unsigned char dat)//DAC输出   dat - 输入进行数模转换�
     IIC_SendByte(0x43);  //DAC输出模式 
     IIC_WaitAck();
 
-    IIC_SendByte(dat);
+    IIC_SendByte(dat);   4V=204/51   yV=x/51
     IIC_WaitAck();
     IIC_Stop();
 	
